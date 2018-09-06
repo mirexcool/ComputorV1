@@ -6,11 +6,13 @@
 #define COMPUTORV1_COMPUTOR_HPP
 
 #include <iostream>
+#include "string.h"
+#include <boost/algorithm/string.hpp>
 
 class Computor {
     public:
         Computor();
-        Computor(char * str);
+        Computor(std::string inputString);
         ~Computor();
         void addPower(int power, double val);
         void split();
