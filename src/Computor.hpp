@@ -25,7 +25,7 @@ class Computor {
     private:
         double  powers[MAX_DEGREE];
         char *inputString;
-        int _PolynomalDegree = 0;
+        int _PolynomalDegree;
 
 
 };

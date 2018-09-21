@@ -26,6 +26,7 @@ Computor::Computor() {}
 
 Computor::Computor(char * str) {
     inputString = str;
+    _PolynomalDegree = 0;
     memset(this->powers, 0, sizeof(double)* MAX_DEGREE);
 }
 
@@ -60,13 +61,13 @@ void Computor::split() {
 }
 
 void Computor::getNumbers(char *substring, int inverse) {
-    int i = 0;
+    size_t i = 0;
     int signPlus = 1;
     double number = 0;
     int power = 0;
     int noNumber = 0;
 
-    while (substring[i] < '0' or substring[i] > '9' )
+    while (substring[i] < '0' || substring[i] > '9' )
     {
         if (substring[i] == '-')
             signPlus = -1;
@@ -83,7 +84,7 @@ void Computor::getNumbers(char *substring, int inverse) {
         number = 1 * inverse;
     while (substring[i] != '^' && substring[i] != '\0')
         i++;
-    if (i == strlen(substring) and strchr(substring, 'X'))
+    if (i == strlen(substring) && strchr(substring, 'X'))
         power = 1;
     else if (strchr(substring, '^'))
         power = std::atoi(substring + i+1);
@@ -95,7 +96,7 @@ void Computor::getNumbers(char *substring, int inverse) {
 void Computor::showEval() {
     _PolynomalDegree = getDegree();
 
-    if (_PolynomalDegree != 0 and powers[_PolynomalDegree] != 0)
+    if (_PolynomalDegree != 0 && powers[_PolynomalDegree] != 0)
     {
         std::cout << "Reduced form: ";
         for (int i = 0; i < MAX_DEGREE ; ++i) {
@@ -139,7 +140,7 @@ void Computor::solveEval() {
 
     std::cout<< "Polynomial degree = " <<_PolynomalDegree <<std::endl;
     if (_PolynomalDegree < 3) {
-        if (_PolynomalDegree == 2 and powers[2] != 0)
+        if (_PolynomalDegree == 2 && powers[2] != 0)
         {
             D = this->powers[1] * this->powers[1] - 4 * this->powers[2] * this->powers[0];
 
@@ -163,7 +164,7 @@ void Computor::solveEval() {
                 std::cout << "Roots: " << x1 << "i, " << x2 <<"i" << std::endl;
             }
         }
-        else if (_PolynomalDegree == 1 and powers[1] != 0)
+        else if (_PolynomalDegree == 1 && powers[1] != 0)
             std::cout << "Root: " << this->powers[0]/this->powers[1] * -1 << std::endl;
         else
             if (this->powers[0] == 0 and _PolynomalDegree > 0)
@@ -202,22 +203,22 @@ bool Computor::checkInput() {
     int equal = 0;
     int dot = 0;
 
-    while(( inputString[i] >= '0' and inputString[i] <= '9') or inputString[i] == '^'
-            or inputString[i] == '+' or inputString[i] == '-' or inputString[i] == '*'
-            or inputString[i] == '=' or inputString[i] == 'X' or inputString[i] == '.'
+    while(( inputString[i] >= '0' && inputString[i] <= '9') || inputString[i] == '^'
+            or inputString[i] == '+' || inputString[i] == '-' || inputString[i] == '*'
+            or inputString[i] == '=' || inputString[i] == 'X' || inputString[i] == '.'
             or inputString[i] == ' ')
     {
         if (inputString[i] == '=')
             equal++;
-        if (countPow != 0 and countPow != 1)
+        if (countPow != 0 && countPow != 1)
             ret = false;
         if (inputString[i] =='X')
         {
             dot--;
             countPow++;
-            if ( inputString[i + 1] != '^'  or (inputString[i + 2] < 0 or inputString[i + 2] > '9') )
+            if ( inputString[i + 1] != '^'  || (inputString[i + 2] < 0 || inputString[i + 2] > '9') )
                 ret = false;
-            if ( inputString[i + 1] == '+' or  inputString[i + 1] == '-' or  inputString[i + 1] == '=' or  inputString[i + 1] == '\0')
+            if ( inputString[i + 1] == '+' ||  inputString[i + 1] == '-' ||  inputString[i + 1] == '=' ||  inputString[i + 1] == '\0')
             {
                 ret = true;
                 countPow--;
@@ -232,34 +233,34 @@ bool Computor::checkInput() {
         if (inputString[i] == '.')
         {
 
-            if (inputString[i - 1] < '0' or inputString[i - 1] > '9' or inputString[i + 1] < '0' or inputString[i + 1] > '9' or dot == 0)
+            if (inputString[i - 1] < '0' || inputString[i - 1] > '9' || inputString[i + 1] < '0' || inputString[i + 1] > '9' || dot == 0)
                 ret = false;
             dot = 0;
         }
         if (inputString[i] == '=')
         {
             dot--;
-            if ((inputString[i - 1] < '0' or inputString[i - 1] > '9' and inputString[i - 1] != 'X' and inputString[i - 1] != '0' and inputString[i - 1] != '-')
-                or (inputString[i + 1] < '0' or inputString[i + 1] > '9' and inputString[i + 1] != 'X') and inputString[i + 1] != '0' and inputString[i + 1] != '-' )
+            if ((inputString[i - 1] < '0' || (inputString[i - 1] > '9' && inputString[i - 1] != 'X' && inputString[i - 1] != '0' && inputString[i - 1] != '-'))
+                || (inputString[i + 1] < '0' || (inputString[i + 1] > '9' && inputString[i + 1] != 'X' && inputString[i + 1] != '0' && inputString[i + 1] != '-' )))
                 ret = false;
         }
         if (inputString[i] == '+')
         {
             dot--;
-            if ((inputString[i - 1] < '0' or inputString[i - 1] > '9' and inputString[i - 1] != 'X')
-                or (inputString[i + 1] < '0' or inputString[i + 1] > '9' and inputString[i + 1] != 'X') )
+            if ((inputString[i - 1] < '0' || (inputString[i - 1] > '9' && inputString[i - 1] != 'X'))
+                || (inputString[i + 1] < '0' || (inputString[i + 1] > '9' && inputString[i + 1] != 'X')) )
                 ret = false;
         }
         if (inputString[i] == '-')
         {
             dot--;
-            if ((inputString[i - 1] < '0' or inputString[i - 1] > '9' and inputString[i - 1] != 'X' and inputString[i - 1] != '=')
-                or (inputString[i + 1] < '0' or inputString[i + 1] > '9' and inputString[i + 1] != 'X') )
+            if ((inputString[i - 1] < '0' || (inputString[i - 1] > '9' && inputString[i - 1] != 'X' && inputString[i - 1] != '='))
+                || ((inputString[i + 1] < '0' || (inputString[i + 1] > '9' && inputString[i + 1] != 'X'))) )
                 ret = false;
         }
         i++;
     }
-    if (len > i or equal == 0)
+    if (len > i || equal == 0)
         ret = false;
     return ret;
 }
